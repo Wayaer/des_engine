@@ -1,5 +1,5 @@
 name: des_engine
-description: A des decryption engine, he only has dart code
+description:  A des decryption engine, he only has dart code
 version: 0.0.1
 repository: https://github.com/Wayaer/des_engine
 
