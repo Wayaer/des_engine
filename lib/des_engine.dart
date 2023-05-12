@@ -6,8 +6,10 @@ import 'package:des_engine/permuted.dart';
 abstract class Engine {
   void init(bool forEncryption, List<int> key);
 
+  /// process
   List<int> process(List<int> dataWords);
 
+  /// reset
   void reset();
 }
 
@@ -27,6 +29,7 @@ abstract class BaseEngine implements Engine {
     forEncryption = false;
   }
 
+  /// processBlock
   int processBlock(List<int> M, int offset);
 
   @override
@@ -150,6 +153,7 @@ class DES {
   final Engine engine;
   final String key;
 
+  /// encode
   String? encode(String message) {
     engine.init(true, key.utf8ToList);
     final List<int> result = engine.process(message.utf8ToList);
@@ -157,6 +161,7 @@ class DES {
     return result.toUtf8;
   }
 
+  /// decode
   String? decode(String text) {
     final Engine b = engine..init(false, key.utf8ToList);
     final List<int> result = b.process(text.utf8ToList);
@@ -164,9 +169,11 @@ class DES {
     return result.toUtf8;
   }
 
+  /// encodeBase64
   String? encodeBase64(String message) =>
       encode(message)!.codeUnits.base64Encode;
 
+  /// decodeBase64
   String? decodeBase64(String text) {
     final Engine b = engine..init(false, key.utf8ToList);
     final List<int> result = b.process(_desParseBase64(text));
@@ -178,16 +185,13 @@ class DES {
   List<int> _desParseBase64(String base64Str) {
     const String map =
         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-    List<int>? reverseMap;
+    List<int> reverseMap = List<int>.filled(123, 0);
+    for (int j = 0; j < map.length; j++) {
+      reverseMap[map.codeUnits[j]] = j;
+    }
 
     /// Shortcuts
     int base64StrLength = base64Str.length;
-    if (reverseMap == null) {
-      reverseMap = List<int>.filled(123, 0);
-      for (int j = 0; j < map.length; j++) {
-        reverseMap[map.codeUnits[j]] = j;
-      }
-    }
 
     /// Ignore padding
     final int paddingChar = map.codeUnits[64];

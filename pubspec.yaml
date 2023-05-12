@@ -1,11 +1,11 @@
 name: des_engine
-description:  A des decryption engine, he only has dart code
-version: 0.0.1
+description: A des decryption engine, he only has dart code，The simplest method was used
+version: 0.0.2
 repository: https://github.com/Wayaer/des_engine
 
 environment:
-  sdk: '>=2.19.4 <3.0.0'
-  flutter: ">=1.17.0"
+  sdk: '>=2.18.0 <4.0.0'
+  flutter: ">=2.0.0"
 
 dependencies:
   flutter:
