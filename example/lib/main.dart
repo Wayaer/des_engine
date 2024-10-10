@@ -8,8 +8,8 @@ void main() {
   try {
     final DES des = DES(DESEngine(), key);
     decoded = des.decodeBase64(str);
-  } catch (_) {
-    debugPrint(_.toString());
+  } catch (e) {
+    debugPrint(e.toString());
   }
 
   String result =
